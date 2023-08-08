@@ -1,0 +1,15 @@
+# egret项目的gitignore文件
+
+# 忽略系统和编辑器生成的文件
+/.vscode
+/.wing
+/.idea
+.DS_Store
+Thumbs.db
+
+# 忽略编译生成的文件
+/bin-debug
+/bin-release
+
+# 忽略日志文件
+*.log
