@@ -75,6 +75,7 @@ class Main extends eui.UILayer {
             await RES.loadConfig("resource/default.res.json", "resource/");
             await this.loadTheme();
             await RES.loadGroup("preload", 0, loadingView);
+            await RES.loadGroup("snakegame", 0, loadingView);
             this.stage.removeChild(loadingView);
         }
         catch (e) {
@@ -83,7 +84,7 @@ class Main extends eui.UILayer {
     }
 
     private loadTheme() {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             // load skin theme configuration file, you can manually modify the file. And replace the default skin.
             //加载皮肤主题配置文件,可以手动修改这个文件。替换默认皮肤。
             let theme = new eui.Theme("resource/default.thm.json", this.stage);
@@ -100,12 +101,12 @@ class Main extends eui.UILayer {
      * Create scene interface
      */
     protected createGameScene(): void {
-        let sky = this.createBitmapByName("bg_jpg");
-        this.addChild(sky);
         let stageW = this.stage.stageWidth;
         let stageH = this.stage.stageHeight;
-        sky.width = stageW;
-        sky.height = stageH;
+        // let sky = this.createBitmapByName("bg_jpg");
+        // this.addChild(sky);
+        // sky.width = stageW;
+        // sky.height = stageH;
 
         let topMask = new egret.Shape();
         topMask.graphics.beginFill(0x000000, 0.5);

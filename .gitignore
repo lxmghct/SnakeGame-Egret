@@ -13,3 +13,5 @@ Thumbs.db
 
 # 忽略日志文件
 *.log
+
+/libs
