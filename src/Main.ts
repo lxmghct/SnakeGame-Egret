@@ -45,6 +45,7 @@ class Main extends eui.UILayer {
             egret.ticker.resume();
         }
 
+
         //inject the custom material parser
         //注入自定义的素材解析器
         let assetAdapter = new AssetAdapter();
@@ -92,6 +93,9 @@ class Main extends eui.UILayer {
         })
     }
 
+    private snake: Snake;
+    private updateInterval: number = 25;
+
     /**
      * 创建场景界面
      * Create scene interface
@@ -101,6 +105,28 @@ class Main extends eui.UILayer {
         let snake = new Snake(this, 50);
         snake.setPositon(200, 400);
         snake.setLength(5);
+        this.snake = snake;
+
+        
+        let controlSnakeMove = (controlx: number, controly: number, controlSize: number) => {
+            snake.changeDirection(controlx, controly);
+            let d = Math.sqrt(controlx * controlx + controly * controly);
+            snake.setSpeed(d * 5 < controlSize ? 0 : 3);
+        }
+        let joystick = new JoyStick(80, controlSnakeMove);
+        this.addChild(joystick);
+        joystick.x = 100;
+        joystick.y = 500;
+
+        this.updateGame();
     }
+
+    private updateGame() {
+        if (this.snake) {
+            this.snake.update();
+        }
+        egret.Tween.get(this).wait(this.updateInterval).call(this.updateGame, this);
+    }
+
     
 }

@@ -16,6 +16,7 @@
 		"bin-debug/Platform.js",
 		"bin-debug/ThemeAdapter.js",
 		"bin-debug/Game/Resource.js",
-		"bin-debug/Game/Snake.js"
+		"bin-debug/Game/Snake.js",
+		"bin-debug/UI/JoyStick.js"
 	]
 }

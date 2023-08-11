@@ -112,7 +112,9 @@ class Snake {
     }
 
     private init() {
-        this.speed = 3;
+        this.speed = 0;
+        this.vx = 0;
+        this.vy = 0;
         let headNode: SnakeNode = new SnakeNode(this.nodeSize, this.snakeDatas[0]["type"], this.snakeDatas[0]);
         this.snakeNodes = [headNode];
         this.parent.addChild(headNode);
@@ -120,6 +122,9 @@ class Snake {
     }
 
     private updatePath() {
+        if (this.speed <= 0) {
+            return;
+        }
         this.posCountOfNode = Math.floor(this.nodeSize / this.speed);
         // 线性插值重新计算路径
         const newPoints = [];
@@ -143,6 +148,9 @@ class Snake {
             node.y = y;
         }
         this.path = [];
+        if (!this.posCountOfNode) {
+            this.posCountOfNode = Math.floor(this.nodeSize / 3);
+        }
         for (let i = 0; i < this.posCountOfNode * (this.snakeNodes.length - 1); i++) {
             this.path.push([x, y]);
         }
@@ -150,13 +158,17 @@ class Snake {
     }
 
     public setSpeed(speed: number) {
-        this.speed = speed;
-        if (speed > 0) {
-            this.updatePath();
+        if (speed < 0 || speed == this.speed) {
+            return;
         }
+        this.speed = speed;
+        this.updatePath();
     }
 
     public move() {
+        if (this.speed <= 0) {
+            return;
+        }
         this.snakeNodes[0].x += this.vx;
         this.snakeNodes[0].y += this.vy;
         this.path.unshift([this.snakeNodes[0].x, this.snakeNodes[0].y]);
@@ -206,6 +218,10 @@ class Snake {
         while (this.snakeNodes.length > length) {
             this.popNode();
         }
+    }
+
+    public update() {
+        this.move();
     }
 
 }
